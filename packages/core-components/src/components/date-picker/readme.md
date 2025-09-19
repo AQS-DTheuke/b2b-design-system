@@ -16,6 +16,7 @@
 
 | Event                           | Description                      | Type                                           |
 | ------------------------------- | -------------------------------- | ---------------------------------------------- |
+| `b2b-date-picker-escape`        | Event emitted on escape press*   | `CustomEvent<EscapePressed<any>>`              |
 | `b2b-date-picker-year-selected` | Event emitted on selecting year* | `CustomEvent<YearSelectedEventDetail<number>>` |
 
 
@@ -24,11 +25,13 @@
 ### Used by
 
  - [b2b-date-picker](.)
+ - [b2b-date-range-picker](../date-range-picker)
 
 ### Graph
 ```mermaid
 graph TD;
   b2b-date-picker --> b2b-date-picker-years
+  b2b-date-range-picker --> b2b-date-picker-years
   style b2b-date-picker-years fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
