@@ -144,12 +144,12 @@ describe('DateRange', () => {
       ],
       [
         JSON.stringify([
-          new Date(2025, 0, 1).toISOString(),
-          new Date(2025, 0, 1).toISOString(),
-          new Date(2025, 0, 1).toISOString(),
+          new Date(Date.UTC(2025, 0, 1)).toISOString(),
+          new Date(Date.UTC(2025, 0, 1)).toISOString(),
+          new Date(Date.UTC(2025, 0, 1)).toISOString(),
         ]),
         new Error(
-          'Invalid date range: ["2024-12-31T23:00:00.000Z","2024-12-31T23:00:00.000Z","2024-12-31T23:00:00.000Z"]',
+          'Invalid date range: ["2025-01-01T00:00:00.000Z","2025-01-01T00:00:00.000Z","2025-01-01T00:00:00.000Z"]',
         ),
       ],
     ];
