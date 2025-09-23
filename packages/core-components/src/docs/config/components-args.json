@@ -1440,9 +1440,16 @@
   },
   "b2b-date-range-picker": {
     "dateRange": {
+      "options": [
+        null,
+        null
+      ],
+      "control": {
+        "type": "radio"
+      },
       "table": {
         "type": {
-          "summary": "readonly [Date, Date]"
+          "summary": "readonly [Dateish, Dateish]"
         },
         "defaultValue": {}
       },
@@ -1523,7 +1530,7 @@
     "presets": {
       "table": {
         "type": {
-          "summary": "{ [x: string]: readonly [Date, Date]; }"
+          "summary": "{ [x: string]: DateRange; }"
         },
         "defaultValue": {
           "summary": "{}"
@@ -1619,7 +1626,9 @@
         "type": {
           "summary": "Date"
         },
-        "defaultValue": {}
+        "defaultValue": {
+          "summary": "new Date()"
+        }
       },
       "description": "The currently shown date (year+month)."
     }

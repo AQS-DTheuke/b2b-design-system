@@ -13,7 +13,7 @@
 | `firstDate`    | `first-date`  | The first date of the selection. This may be absent if no dates have been selected yet. This is always smaller/earlier than the second date.                                                                       | `Date \| readonly [number, number, number] \| string` | `undefined`   |
 | `preview`      | `preview`     | Whether the shown values are a preview and not the actual values (force-hover state).                                                                                                                              | `boolean`                                             | `false`       |
 | `secondDate`   | `second-date` | The second date of the selection. This may be absent if none or only one date has been selected yet. This is always bigger/later than the first date.                                                              | `Date \| readonly [number, number, number] \| string` | `undefined`   |
-| `viewedDate`   | `viewed-date` | The currently shown date (year+month).                                                                                                                                                                             | `Date \| readonly [number, number, number] \| string` | `undefined`   |
+| `viewedDate`   | `viewed-date` | The currently shown date (year+month).                                                                                                                                                                             | `Date \| readonly [number, number, number] \| string` | `new Date()`  |
 
 
 ## Events
