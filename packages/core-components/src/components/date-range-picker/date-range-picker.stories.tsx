@@ -19,7 +19,7 @@ const controls = {
   error: 'text',
 };
 
-const meta: Meta = {
+export default {
   title: 'Components/Form/Date Range Picker',
   component: 'b2b-date-range-picker',
   args: {
@@ -49,46 +49,90 @@ const meta: Meta = {
         ${toHtmlAttribute(args, 'language')} >
       </b2b-date-range-picker>
     </div>`,
-};
+} satisfies Meta;
 
-export default meta;
+function findDatePicker(
+  canvasElement: HTMLElement,
+): HTMLB2bDateRangePickerElement {
+  return canvasElement.querySelector('b2b-date-range-picker');
+}
+
+async function open(datePicker: HTMLB2bDateRangePickerElement): Promise<void> {
+  const wrapper = datePicker.shadowRoot?.querySelector(
+    '.b2b-date-range-picker-input-wrapper',
+  );
+  await userEvent.click(wrapper);
+}
+
+const LOAD_DELAY = 500;
 
 export const Default: Story = {
-  args: { ...meta.args },
   play: async ({ canvasElement }) => {
     setTimeout(async () => {
-      const datePicker = canvasElement.querySelector('b2b-date-range-picker');
-      const focusWrapper = datePicker.shadowRoot?.querySelector(
-        '.b2b-date-picker-input-focus-wrapper',
-      );
-      await userEvent.click(focusWrapper);
-    }, 500);
+      const datePicker = findDatePicker(canvasElement);
+      datePicker.dateRange = [new Date(2025, 0, 1), new Date(2025, 0, 1)];
+      await open(datePicker);
+    }, LOAD_DELAY);
   },
 };
 
 export const AllProperties: Story = {
   args: {
-    ...meta.args,
     label: 'Custom Label',
     required: true,
-    invalid: true,
+    invalid: false,
     hint: 'Please Readme',
     error: 'Sorry, but this is a test',
   },
   play: async ({ canvasElement }) => {
     setTimeout(async () => {
-      const datePicker = canvasElement.querySelector('b2b-date-range-picker');
-      datePicker.dateRange = [new Date(2025, 0, 1), new Date()];
+      const datePicker = findDatePicker(canvasElement);
+      datePicker.dateRange = [new Date(2025, 0, 1), new Date(2025, 1, 0)];
       datePicker.disableDates = date => date.getDay() == 1;
       datePicker.presets = {
         'Today': [new Date(), new Date()],
-        'Feature Added': [new Date(2025, 8, 23), new Date(2025, 8, 23)],
+        'Feature Added': [new Date(2025, 8, 1), new Date(2025, 8, 23)],
       };
 
-      const focusWrapper = datePicker.shadowRoot?.querySelector(
-        '.b2b-date-picker-input-focus-wrapper',
-      );
-      await userEvent.click(focusWrapper);
-    }, 500);
+      await open(datePicker);
+    }, LOAD_DELAY);
+  },
+};
+
+export const PresetHover: Story = {
+  play: async ({ canvasElement }) => {
+    setTimeout(async () => {
+      const datePicker = findDatePicker(canvasElement);
+      datePicker.dateRange = [new Date(2025, 8, 1), new Date(2025, 8, 1)];
+      datePicker.presets = {
+        'Today': [new Date(), new Date()],
+        'Feature Added': [new Date(2025, 8, 1), new Date(2025, 8, 23)],
+      };
+
+      setTimeout(async () => {
+        const presets = datePicker.shadowRoot?.querySelector(
+          '.b2b-date-range-picker-body--presets',
+        );
+        const preset2 = presets?.children[1] as HTMLElement;
+        userEvent.hover(preset2);
+      }, 500);
+
+      await open(datePicker);
+    }, LOAD_DELAY);
+  },
+};
+
+export const PresetSelected: Story = {
+  play: async ({ canvasElement }) => {
+    setTimeout(async () => {
+      const datePicker = findDatePicker(canvasElement);
+      datePicker.dateRange = [new Date(2025, 8, 1), new Date(2025, 8, 23)];
+      datePicker.presets = {
+        'Today': [new Date(), new Date()],
+        'Feature Added': [new Date(2025, 8, 1), new Date(2025, 8, 23)],
+      };
+
+      await open(datePicker);
+    }, LOAD_DELAY);
   },
 };

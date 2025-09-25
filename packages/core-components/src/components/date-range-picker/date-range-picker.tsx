@@ -128,12 +128,13 @@ export class B2bDateRangePicker implements ComponentInterface {
   @State() private highlightDateRange?: DateRange;
   @State() private viewMode: DatePickerView = DatePickerView.Days;
   @State() private viewedYear: number;
-  @State() private viewedMonth: number;
-  @State() private viewedDay: number;
+  @State() private viewedMonth: number; // 1-based
+  @State() private viewedDay: number; // 1-based
 
   @Watch('dateRange')
   updateDateRange(value: DateRange | undefined): void {
     this.internalDateRange = toDateRange(value);
+    this.resetViewedDate();
   }
 
   // #endregion
@@ -168,7 +169,7 @@ export class B2bDateRangePicker implements ComponentInterface {
 
   @Listen('b2b-date-picker-month-selected')
   handleMonthSelected(event: CustomEvent<MonthSelectedEventDetail>): void {
-    this.viewedMonth = event.detail.value;
+    this.viewedMonth = event.detail.value + 1;
     this.viewMode = DatePickerView.Days;
   }
 
@@ -200,8 +201,8 @@ export class B2bDateRangePicker implements ComponentInterface {
   }
 
   private setDate(selected: DateRange | undefined): void {
-    this.toggleOpen(false);
     this.internalDateRange = selected;
+    this.toggleOpen(false);
     if (selected == null) {
       this.b2bClear.emit();
     } else {
@@ -237,8 +238,8 @@ export class B2bDateRangePicker implements ComponentInterface {
   // #region Component-Hooks
 
   componentWillLoad() {
-    this.resetViewedDate();
     this.internalDateRange = toDateRange(this.dateRange);
+    this.resetViewedDate();
   }
 
   render() {
@@ -252,8 +253,9 @@ export class B2bDateRangePicker implements ComponentInterface {
             class={{
               'b2b-date-range-picker-input-wrapper': true,
               'b2b-date-range-picker-input-wrapper--error': this.invalid,
-            }}>
-            <b2b-paragraph margin={false} onClick={() => this.toggleOpen()}>
+            }}
+            onClick={() => this.toggleOpen()}>
+            <b2b-paragraph margin={false}>
               {toDateRangeString(this.internalDateRange, '')}
             </b2b-paragraph>
             <div class="b2b-icons">
@@ -304,7 +306,7 @@ export class B2bDateRangePicker implements ComponentInterface {
               <div>
                 <b2b-date-picker-header
                   language={this.language}
-                  selectedMonth={this.viewedMonth}
+                  selectedMonth={this.viewedMonth - 1}
                   selectedYear={this.viewedYear}
                 />
                 <b2b-date-picker-days-header language={this.language} />
@@ -335,7 +337,7 @@ export class B2bDateRangePicker implements ComponentInterface {
             {this.viewMode === DatePickerView.Months && (
               <b2b-date-picker-months
                 language={this.language}
-                selectedMonth={this.viewedMonth}
+                selectedMonth={this.viewedMonth - 1}
               />
             )}
             {this.viewMode === DatePickerView.Years && (

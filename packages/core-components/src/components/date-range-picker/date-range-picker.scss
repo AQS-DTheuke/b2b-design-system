@@ -101,6 +101,10 @@
         background-color: var(--b2b-color-hover-default);
 
         --b2b-color-copy-default: var(--b2b-color-black-100);
+
+        color: var(
+          --b2b-color-copy-default
+        ); /* required to prevent discarding of the variable overwrite */
       }
     }
 
@@ -108,6 +112,10 @@
       background-color: var(--b2b-color-black-100);
 
       --b2b-color-copy-default: var(--b2b-color-white-100);
+
+      color: var(
+        --b2b-color-copy-default
+      ); /* required to prevent discarding of the variable overwrite */
     }
   }
 }
