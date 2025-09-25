@@ -1,16 +1,15 @@
+import type { ComponentInterface, EventEmitter } from '@stencil/core';
 import {
   Component,
-  ComponentInterface,
   Element,
   Event,
-  EventEmitter,
   h,
   Host,
   Listen,
   Prop,
   State,
 } from '@stencil/core';
-import {
+import type {
   DateSelectedEventDetail,
   EscapePressed,
 } from '../../utils/interfaces/form.interface';
